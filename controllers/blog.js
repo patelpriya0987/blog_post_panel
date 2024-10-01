@@ -32,4 +32,9 @@ const addBlogController =async (req , res) =>{
     
     
 }
-module.exports = {addBlog,addBlogController,viewBlog}
+const editBlog = (req,res) => {
+  console.log("edit blogg",req.params.id);
+  res.render('editBlog');
+  
+}
+module.exports = {addBlog,addBlogController,viewBlog,editBlog}

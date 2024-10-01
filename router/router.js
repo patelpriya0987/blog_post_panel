@@ -22,5 +22,6 @@ router.get('/signIn',controller.signIn);
 router.post('/addBlogController',multer,blog.addBlogController);
 router.get('/addBlog' ,blog.addBlog);
 router.get('/viewBlog',isAuth,blog.viewBlog);
+router.get('/edit:id',isAuth,blog.editBlog);
 
 module.exports = router;
