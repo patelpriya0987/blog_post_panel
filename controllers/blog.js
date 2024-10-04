@@ -64,6 +64,7 @@
 const fs = require('fs');
 const blog = require('../models/blog/blogModel');
 const path = require('path');
+const { models } = require('mongoose');
 const Path = path.join(__dirname , "/views");
 
 const addBlog = async (req , res) => {
@@ -77,7 +78,9 @@ const allBlog = async (req, res) => {
     blog.find({})
     .then(blogData => {
         console.log("blogData", blogData);
-        res.render('allBlog', { data: req.user, blogData: blogData });
+        res.render('allBlog', { data: req.user, blogData: blogData })
+        
+        ;
     })
     .catch(err => console.log(err));
 }
@@ -99,11 +102,41 @@ const addBlogController = async (req, res) => {
     res.redirect('/');
 }
 
-const editBlog = (req, res) => {
+const editBlog = async(req, res) => {
     console.log("edit blog", req.params.id);
-    res.render('editBlog');
-}
+    const data = await blog.findOne({_id : req.params.id})
 
+    res.render('editBlog',{data});
+}
+const updateBlog = async(req,res) => {
+    try{
+
+        const data = await blog.findOne({_id : req.params.id})
+        console.log("data",data,req.file,req.body);
+        
+            data.title = req.body.title;
+            data.content = req.body.content;
+            if (req.file) {
+                const oldPost = path.join(__dirname, '../', data.blog_img);
+                console.log("oldPost path",oldPost);
+                
+                fs.unlink(oldPost, (err) => {
+                    if (err) {
+                        console.error('Error while deleting old poster:', err);
+                    }
+                });
+                data.blog_img = req.file.path;
+            }
+            console.log("data",data);
+            await data.save();
+            // await blog.findByIdAndUpdate({_id : req.params.id})
+            console.log("update bloggg",req.params.id );
+            res.redirect('/allBlog');
+    }catch(err) {
+        console.error(err);
+        res.status(500).send({ error: 'Failed to update the blog' });
+      }
+}
 const deletBlog = async (req, res) => {
     console.log("delete blog");
 
@@ -128,4 +161,4 @@ const deletBlog = async (req, res) => {
     res.redirect('/allBlog');
 };
 
-module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog };
+module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog };
