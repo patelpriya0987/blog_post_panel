@@ -12,6 +12,10 @@ const blogModelSchema = mongoose.Schema({
     blog_img : {
         type:String,
         required:true
+    },
+    user_id : {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
     }
 })
 

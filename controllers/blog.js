@@ -71,16 +71,24 @@ const addBlog = async (req , res) => {
     console.log("add blog");
     res.render('addBlog');
 }
-
+const myBlog = (req,res) => {
+    console.log("my blog");
+    console.log("res.user my blog", req.user);
+    
+    blog.find({user_id:req.user._id})
+    .then(blogData => {
+        console.log("blogData form my blog", blogData);
+        res.render('myBlog',{ data: req.user, blogData: blogData });
+    })
+    .catch(err => console.log(err));
+}
 const allBlog = async (req, res) => {
     console.log("view blog controller");
 
     blog.find({})
     .then(blogData => {
         console.log("blogData", blogData);
-        res.render('allBlog', { data: req.user, blogData: blogData })
-        
-        ;
+        res.render('allBlog', { data: req.user, blogData: blogData });
     })
     .catch(err => console.log(err));
 }
@@ -93,7 +101,8 @@ const addBlogController = async (req, res) => {
     const data = {
         title: req.body.title,
         content: req.body.content,
-        blog_img: req.file ? req.file.path : null
+        blog_img: req.file ? req.file.path : null,
+        user_id : req.user._id,
     };
 
     let model = new blog(data);
@@ -161,4 +170,4 @@ const deletBlog = async (req, res) => {
     res.redirect('/allBlog');
 };
 
-module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog };
+module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog ,myBlog };

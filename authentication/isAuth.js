@@ -2,7 +2,7 @@ const isAuth = (req,res,next) => {
     console.log("isAuth");
     
     if(req.isAuthenticated()){
-        next();
+        return next();
     }else{
         res.redirect('/login')
     }
