@@ -7,7 +7,7 @@ const passport = require('../config/pasportConfig');
 const isAuth = require('../authentication/isAuth')
 const blog = require('../controllers/blog')
 const multer = require('../config/multerConfig')
-
+const topic = require('../controllers/topic')
 
 router.get('/myProfile',isAuth,controller.myProfileController)
 router.get('/profilePage',isAuth,controller.profilePage)
@@ -26,5 +26,9 @@ router.get('/myBlog',isAuth,blog.myBlog);
 router.get('/edit/:id',isAuth,blog.editBlog)
 router.post('/editBlog/:id',multer,blog.updateBlog)
 router.get('/delete/:id',isAuth,blog.deletBlog);
+router.get('/deleteTopic/:id',isAuth,topic.deletTopic);
 
+router.get('/addTopics',isAuth,topic.addTopic);
+router.get('/subTopic',isAuth,topic.subTopic);
+router.post('/addTopicController',isAuth,topic.addTopicController)
 module.exports = router;
