@@ -14,6 +14,7 @@ const addTopicController = async(req,res) => {
     const data = {
         topic: req.body.topic,
         user_id : req.user._id,
+        creater_name : req.user.name
     };
 
     let model = new topicModel(data);
@@ -39,10 +40,10 @@ const deletTopic = async (req, res) => {
     const topicId = req.params.id;
 
     const deletedTopic = await topicModel.findByIdAndDelete(topicId);
-    console.log("deletedBlog", deletedTopic);
+    console.log("deleted Topic con ", deletedTopic);
 
 
-    res.redirect('/addTopic');
+    res.redirect('/addTopics');
 };
 
 module.exports = {addTopic,addTopicController,subTopic,deletTopic};
