@@ -367,7 +367,7 @@
                           <h5>Sub Topic : <%= subtopicData.subTopic %></h5>
                           <div class="d-flex align-items-center justify-content-between">
                             <span>Created By <%= subtopicData.topic.creater_name %></span>
-                            <% if (topic.user_id == data._id) { %>
+                            <% if (subtopicData.topic.user_id.toString() === data._id.toString()) { %>
                               <a href="/deleteTopic/<%= subtopicData._id %>" class="btn btn-outline-danger ml-auto">Delete</a>
                             <% } %>
                           </div>
