@@ -1,4 +1,5 @@
-const topicModel = require('../models/topic/topicModel')
+const topicModel = require('../models/topic/topicModel');
+const subTopicModel = require('../models/subTopic/subTopicModel');
 const addTopic = (req,res) => {
     console.log("add topic");
     topicModel.find({})
@@ -29,11 +30,52 @@ const addTopicController = async(req,res) => {
     .catch(err => console.log(err));
     
 }
-const subTopic = (req,res) => {
-    console.log("add topic");
-    res.render('subTopic',{data:req.user});    
-}
+const subTopic = async(req,res) => {
+    console.log("add sub topic");
 
+    try {
+        const subTopicData = await subTopicModel.find({}).populate('topic');
+        const topicData = await topicModel.find({}); // Fetch topics separately
+
+        console.log("sub topics from my db", subTopicData);
+        console.log("topics from my db", topicData);
+        console.log("req.user",req.user);
+        
+
+        res.render('subTopic', {
+            data: req.user, 
+            topic: topicData,
+            subtopic: subTopicData
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+}
+const subTopicContoller = async (req, res) => {
+    console.log("add sub topic controller");
+
+    try {
+        if (!req.body.topic_id) {
+            return res.status(400).send("Topic ID is required.");
+        }
+
+        const data = {
+            subTopic: req.body.subTopic,
+            topic: req.body.topic_id
+        };
+
+        let model = new subTopicModel(data);
+        console.log("model", model);
+
+        await model.save();
+
+        res.redirect('/subTopic');
+    } catch (err) {
+        console.error("Error creating subtopic:", err);
+        res.status(500).send("Server Error");
+    }
+};
 const deletTopic = async (req, res) => {
     console.log("delete blog");
 
@@ -46,4 +88,4 @@ const deletTopic = async (req, res) => {
     res.redirect('/addTopics');
 };
 
-module.exports = {addTopic,addTopicController,subTopic,deletTopic};
+module.exports = {addTopic,addTopicController,subTopic,deletTopic,subTopicContoller};

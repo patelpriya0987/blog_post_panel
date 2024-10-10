@@ -27,8 +27,9 @@ router.get('/edit/:id',isAuth,blog.editBlog)
 router.post('/editBlog/:id',multer,blog.updateBlog)
 router.get('/delete/:id',isAuth,blog.deletBlog);
 router.get('/deleteTopic/:id',isAuth,topic.deletTopic);
-
+// topic
 router.get('/addTopics',isAuth,topic.addTopic);
-router.get('/subTopic',isAuth,topic.subTopic);
 router.post('/addTopicController',isAuth,topic.addTopicController)
+router.get('/subTopic',isAuth,topic.subTopic);
+router.post('/subTopicContoller',isAuth,topic.subTopicContoller);
 module.exports = router;

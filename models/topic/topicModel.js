@@ -7,7 +7,7 @@ const topicModelSchema = mongoose.Schema({
     },
     user_id : {
         type:mongoose.Schema.Types.ObjectId,
-        ref:'user'   
+        ref:'signUp'   
     },
     creater_name : {
         type: String

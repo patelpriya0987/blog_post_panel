@@ -14,7 +14,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>my blog - Analytics | Materio - Bootstrap Material Design Admin Template</title>
+    <title>add topic - Analytics | Materio - Bootstrap Material Design Admin Template</title>
 
     <meta name="description" content="" />
 
@@ -351,7 +351,7 @@
                     <div class="col-md-4" style="width: 25%;">
                       <div class="card mb-4">
                         <div class="card-body">
-                          <h5 class="card-title"><%= topicData.topic %></h5>
+                          <h5 class="card-title">Topic : <%= topicData.topic %></h5>
                           <div class="d-flex align-items-center justify-content-between">
                             <span>Created By <%= topicData.creater_name %></span>
                             <% if (topicData.user_id.toString() === data._id.toString()) { %>
