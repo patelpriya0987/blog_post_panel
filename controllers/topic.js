@@ -76,16 +76,53 @@ const subTopicContoller = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-const deletTopic = async (req, res) => {
-    console.log("delete blog");
+const viewTopic = async (req, res) => {
+    console.log("view topics");
+    try {
+        // Fetch all topics
+        const allTopics = await topicModel.find({});
 
-    const topicId = req.params.id;
+        // Fetch all subtopics and populate the related topics
+        const subTopics = await subTopicModel.find({}).populate('topic');
 
-    const deletedTopic = await topicModel.findByIdAndDelete(topicId);
-    console.log("deleted Topic con ", deletedTopic);
+        // Group subtopics under their respective topics
+        const topicsWithSubtopics = allTopics.map(topic => {
+            const relatedSubtopics = subTopics.filter(sub => sub.topic && sub.topic._id.toString() === topic._id.toString());
+            return {
+                ...topic._doc, // Include topic details
+                subtopics: relatedSubtopics // Add related subtopics
+            };
+        });
 
-
-    res.redirect('/addTopics');
+        // Render the view with the topics and their subtopics
+        res.render('viewTopic', {
+            data: req.user,
+            topicsWithSubtopics: topicsWithSubtopics
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
 };
 
-module.exports = {addTopic,addTopicController,subTopic,deletTopic,subTopicContoller};
+
+const deleteTopicAndSubTopics = async (req, res) => {
+    try {
+        const topicId = req.params.id;
+
+        // Delete all subtopics associated with this topic
+        await subTopicModel.deleteMany({ topic: topicId });
+
+        // Delete the topic itself
+        const deletedTopic = await topicModel.findByIdAndDelete(topicId);
+        console.log("Deleted topic and its associated subtopics:", deletedTopic);
+
+        res.redirect('/viewTopic');
+    } catch (err) {
+        console.error("Error deleting topic and subtopics:", err);
+        res.status(500).send("Server error");
+    }
+};
+
+
+module.exports = {addTopic,addTopicController,subTopic,deleteTopicAndSubTopics,subTopicContoller,viewTopic};

@@ -14,7 +14,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>my blog - Analytics | Materio - Bootstrap Material Design Admin Template</title>
+    <title>view topic - Analytics | Materio - Bootstrap Material Design Admin Template</title>
 
     <meta name="description" content="" />
 
@@ -331,33 +331,42 @@
             <!-- Content -->
 
             <div class="container">
-                <h2>My Blogs:</h2>
-                <div class="row">
-                  <% blogData.forEach(blog => { %>
-                  <div class="col-md-4" style="width: 25%;">
-                      <div class="card mb-4">
-                          <img src="../../<%= blog.blog_img %>" class="card-img-top" alt="<%= blog.title %>" style="height: 250px;">
-                          <div class="card-body">
-                              <h5 class="card-title"><%= blog.title %></h5>
-                              <p class="card-text"><%= blog.content %></p>
-                              <a href="/edit/<%= blog._id %>" class="btn btn-outline-warning">Edit</a>
-                              <a href="/delete/<%= blog._id %>" class="btn btn-outline-danger">Delete</a>
+              <h2>Topics and Subtopics:</h2>
+              <div class="row">
+                  <% topicsWithSubtopics.forEach(topicData => { %>
+                      <div class="col-md-12">
+                          <div class="card mb-4">
+                              <div class="card-body">
+                                  <h4 class="card-title">Topic: <%= topicData.topic %></h4>
+                                  <span>Created By <%= topicData.creater_name %></span>
+          
+                                  <!-- Delete button for both topic and subtopics -->
+                                  <a href="/deleteTopicAndSubTopics/<%= topicData._id %>" class="btn btn-outline-danger">
+                                      Delete Topic and Subtopics
+                                  </a>
+          
+                                  <!-- Display subtopics for this topic -->
+                                  <% if (topicData.subtopics && topicData.subtopics.length > 0) { %>
+                                      <ul class="list-group mt-3">
+                                          <% topicData.subtopics.forEach(subtopicData => { %>
+                                              <li class="list-group-item">
+                                                  <h5>Subtopic: <%= subtopicData.subTopic %></h5>
+                                              </li>
+                                          <% }) %>
+                                      </ul>
+                                  <% } else { %>
+                                      <p>No subtopics for this topic yet.</p>
+                                  <% } %>
+                              </div>
                           </div>
                       </div>
-                  </div>
                   <% }) %>
               </div>
-                <!-- <ul>
-                <% blogData.forEach((blog) => { %>
-                    <li><strong><%= blog.title %></strong>: <%= blog.content %> : <img src="../../<%= blog.blog_img %>" alt="img" style="width: 200px;"></li>
-                <% }); %>
-                </ul> -->
-            </div>
-
-            <div class="content-backdrop fade"></div>
           </div>
-          <!-- Content wrapper -->
-        </div>
+          
+          
+          </div>
+            <div class="content-backdrop fade"></div>
         <!-- / Layout page -->
       </div>
 

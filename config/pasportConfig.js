@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/signUp/signUp_model'); // Make sure this path is correct
 const bcrypt = require('bcrypt');
+console.log("passport config");
 
 passport.use(new LocalStrategy(
   { usernameField: 'email' },
