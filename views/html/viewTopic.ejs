@@ -331,36 +331,37 @@
             <!-- Content -->
 
             <div class="container">
-              <h2>Topics and Subtopics:</h2>
               <div class="row">
+                <% if(topicsWithSubtopics.length > 0) { %>
+                  <h2>Topics and Subtopics:</h2>
                   <% topicsWithSubtopics.forEach(topicData => { %>
-                      <div class="col-md-12">
-                          <div class="card mb-4">
-                              <div class="card-body">
-                                  <h4 class="card-title">Topic: <%= topicData.topic %></h4>
-                                  <span>Created By <%= topicData.creater_name %></span>
-          
-                                  <!-- Delete button for both topic and subtopics -->
-                                  <a href="/deleteTopicAndSubTopics/<%= topicData._id %>" class="btn btn-outline-danger">
-                                      Delete Topic and Subtopics
-                                  </a>
-          
-                                  <!-- Display subtopics for this topic -->
-                                  <% if (topicData.subtopics && topicData.subtopics.length > 0) { %>
-                                      <ul class="list-group mt-3">
-                                          <% topicData.subtopics.forEach(subtopicData => { %>
-                                              <li class="list-group-item">
-                                                  <h5>Subtopic: <%= subtopicData.subTopic %></h5>
-                                              </li>
-                                          <% }) %>
-                                      </ul>
-                                  <% } else { %>
-                                      <p>No subtopics for this topic yet.</p>
-                                  <% } %>
-                              </div>
-                          </div>
-                      </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h4 class="card-title">Topic: <%= topicData.topic %></h4>
+                                    <span class="mb-2 d-inline-block">Created By <%= topicData.creater_name %></span>
+                                    <a href="/deleteTopicAndSubTopics/<%= topicData._id %>" class=" text-danger p-2">
+                                      <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                    <% if (topicData.subtopics && topicData.subtopics.length > 0) { %>
+                                        <ul class="list-group mt-3">
+                                            <% topicData.subtopics.forEach(subtopicData => { %>
+                                                <li class="list-group-item">
+                                                    <h5>Subtopic: <%= subtopicData.subTopic %></h5>
+                                                </li>
+                                            <% }) %>
+                                        </ul>
+                                    <% } else { %>
+                                        <p>No subtopics for this topic yet.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            
+                        </div>
                   <% }) %>
+                <% }else{ %>
+                  <h2 class="text-center" style="margin-top: 200px;">No Topics Are Availible</h2>
+                <%} %>
               </div>
           </div>
           
