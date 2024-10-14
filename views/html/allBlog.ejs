@@ -340,8 +340,19 @@
                           <div class="card-body">
                               <h5 class="card-title"><%= blog.title %></h5>
                               <p class="card-text"><%= blog.content %></p>
-                              <!-- <a href="/edit/<%= blog._id %>" class="btn btn-outline-warning">Edit</a>
-                              <a href="/delete/<%= blog._id %>" class="btn btn-outline-danger">Delete</a> -->
+                              <% comment.forEach(comment => { %>
+                                <div class="mb-1">
+                                  <h5 class="m-0">Comment : <%= comment.comment %></h5>
+                                  <span>Commeted by <%= comment.user.name %></span>
+                                  <% if(data._id == comment.user._id){ %>
+                                    <a href ="/deletComment" class="ms-2 text-danger">delete</a>
+                                  <% } %>
+                                </div>
+                              <%})%>
+                                <form action="/addComment/<%= blog._id %>" method="post" class="d-flex">
+                                  <input type="text" name="comment" id="comment" placeholder="Add Comment"class="form-control p-1 me-2">
+                                  <button class="btn btn-primary"><i class="ri-arrow-up-line"></i> </button>
+                                </form>
                           </div>
                       </div>
                   </div>

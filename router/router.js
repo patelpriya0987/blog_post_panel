@@ -19,6 +19,7 @@ router.get('/register',controller.register);
 router.get('/logIn',logIn.logIn);
 router.post('/logInController', passport.authenticate('local', { failureRedirect: '/logIn' }),logIn.logInController)
 router.get('/signIn',controller.signIn);
+//blog
 router.post('/addBlogController',multer,blog.addBlogController);
 router.get('/addBlog' ,blog.addBlog);
 router.get('/allBlog',isAuth,blog.allBlog);
@@ -26,6 +27,7 @@ router.get('/myBlog',isAuth,blog.myBlog);
 router.get('/edit/:id',isAuth,blog.editBlog)
 router.post('/editBlog/:id',multer,blog.updateBlog)
 router.get('/delete/:id',isAuth,blog.deletBlog);
+router.post('/addComment/:id',isAuth,blog.addComment)
 // topic
 router.get('/addTopics',isAuth,topic.addTopic);
 router.post('/addTopicController',isAuth,topic.addTopicController)
@@ -33,4 +35,5 @@ router.get('/subTopic',isAuth,topic.subTopic);
 router.post('/subTopicContoller',isAuth,topic.subTopicContoller);
 router.get('/deleteTopicAndSubTopics/:id',isAuth,topic.deleteTopicAndSubTopics);
 router.get('/viewTopic',isAuth,topic.viewTopic);
+
 module.exports = router;

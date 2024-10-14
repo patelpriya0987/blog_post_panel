@@ -1,5 +1,6 @@
 const fs = require('fs');
 const blog = require('../models/blog/blogModel');
+const comment = require('../models/comment/commentModel')
 const path = require('path');
 const { models } = require('mongoose');
 const Path = path.join(__dirname , "/views");
@@ -21,14 +22,13 @@ const myBlog = (req,res) => {
 }
 const allBlog = async (req, res) => {
     console.log("view blog controller");
+    const commnetData = await comment.find({});
+    const blogData = await blog.find({})
 
-    blog.find({})
-    .then(blogData => {
         console.log("blogData", blogData);
-        res.render('allBlog', { data: req.user, blogData: blogData });
-    })
-    .catch(err => console.log(err));
+        res.render('allBlog', { data: req.user, blogData: blogData , comment: commnetData });
 }
+
 
 const addBlogController = async (req, res) => {
     console.log("add blog controller");
@@ -106,5 +106,19 @@ const deletBlog = async (req, res) => {
 
     res.redirect('/');
 };
+const addComment = async(req,res) => {
+    console.log("add commnet");
+    console.log("comment : " , req.body);
+    
+    const data = {
+        comment: req.body.comment,
+        blog : req.params.id,
+        user : req.user._id,
+    }
+    let model = await new comment(data);
+    console.log("data", model);
+    await model.save();
 
-module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog ,myBlog };
+    res.redirect('/allBlog');
+}
+module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog ,myBlog ,addComment};
