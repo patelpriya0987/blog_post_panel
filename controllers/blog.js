@@ -4,6 +4,7 @@ const comment = require('../models/comment/commentModel')
 const path = require('path');
 const { models } = require('mongoose');
 const Path = path.join(__dirname , "/views");
+const userModel = require('../models/signUp/signUp_model')
 
 const addBlog = async (req , res) => {
     console.log("add blog");
@@ -22,9 +23,11 @@ const myBlog = (req,res) => {
 }
 const allBlog = async (req, res) => {
     console.log("view blog controller");
-    const commnetData = await comment.find({});
-    const blogData = await blog.find({})
-
+    const commnetData = await comment.find({}).populate({path:'blog',populate: {path : 'user_id', }}).populate('user');
+            
+        const blogData = await blog.find({})
+        console.log("commnetData", commnetData);
+    
         console.log("blogData", blogData);
         res.render('allBlog', { data: req.user, blogData: blogData , comment: commnetData });
 }
