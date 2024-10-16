@@ -1,14 +1,9 @@
 const dataBase = require('../models/signUp/signUp_model')
 const defaultController =async (req , res) =>{
     console.log("req.user",req.user,req.isAuthenticated());
-    res.render('index',{data:req.user})
+    res.render('index',{data:req.user , logInMess: req.flash('logIn') })
 }
-const myProfileController = async (req , res) => {
-    res.render('myProfile',{data:req.user})
-}
-const profilePage = (req,res) => {
-    res.redirect('/myProfile');
-}
+
 const logout = async (req , res) => {
     req.logout((err)=>{
         if (err) {
@@ -23,4 +18,4 @@ const register = (req,res)=>{
 const signIn = (req,res)=>{
     res.redirect('/login');
 }
-module.exports = {defaultController,myProfileController,logout,register,signIn,profilePage}
+module.exports = {defaultController,logout,register,signIn}

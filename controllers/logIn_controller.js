@@ -7,6 +7,7 @@ const logIn = (req, res) => {
 }
 
 const logInController = async (req, res) => {
+    req.flash('logIn', req.user.name)
     res.redirect('/')
 }
 

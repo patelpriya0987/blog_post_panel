@@ -5,7 +5,7 @@ const addTopic = (req,res) => {
     topicModel.find({})
     .then(topic => {
         console.log("topics form my db", topic);
-        res.render('addTopics',{ data: req.user, topic: topic });
+        res.render('addTopics',{ data: req.user, topic: topic , logInMess: req.flash('logIn') });
     })
     .catch(err => console.log(err));   
 }
@@ -25,7 +25,7 @@ const addTopicController = async(req,res) => {
     topicModel.find({})
     .then(topic => {
         console.log("topics form my db", topic);
-        res.render('addTopics',{ data: req.user, topic: topic });
+        res.render('addTopics',{ data: req.user, topic: topic , logInMess: req.flash('logIn') });
     })
     .catch(err => console.log(err));
     
@@ -45,7 +45,8 @@ const subTopic = async(req,res) => {
         res.render('subTopic', {
             data: req.user, 
             topic: topicData,
-            subtopic: subTopicData
+            subtopic: subTopicData,
+            logInMess: req.flash('logIn') 
         });
     } catch (err) {
         console.error(err);
@@ -93,7 +94,7 @@ const viewTopic = async (req, res) => {
 
         res.render('viewTopic', {
             data: req.user,
-            topicsWithSubtopics: topicsWithSubtopics
+            topicsWithSubtopics: topicsWithSubtopics,logInMess: req.flash('logIn')  
         });
     } catch (err) {
         console.log(err);

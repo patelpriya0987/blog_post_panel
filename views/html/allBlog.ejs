@@ -348,17 +348,9 @@
                                       <h5 class="m-0">Comment : <%= comment.comment %></h5>
                                       <span>Commeted by <%= comment.user.name %></span>
                                       <% if(data._id.toString() == comment.user._id.toString()){ %>
-                                        <a href ="/deletComment" class="ms-2 text-danger">delete</a>
+                                        <a href ="/deletComment/<%=comment._id%>" class="ms-2 text-danger">delete</a>
                                       <% } %>
                                     <% } %>
-                                    <!-- <% if(comment.blog._id === blog._id){ %>
-                                      <h5 class="m-0">Comment : <%= comment.comment %></h5>
-                                      <span>Commeted by <%= comment.user.name %></span>
-                                      <% if(data._id == comment.user._id){ %>
-                                        <a href ="/deletComment" class="ms-2 text-danger">delete</a>
-                                      <% } %>
-
-                                    <% } %>  -->
                                   </div>
                                 <%})%>
                               <% } %>

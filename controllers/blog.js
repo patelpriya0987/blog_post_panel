@@ -8,16 +8,17 @@ const userModel = require('../models/signUp/signUp_model')
 
 const addBlog = async (req , res) => {
     console.log("add blog");
-    res.render('addBlog');
+    req.flash('logIn', req.user.name)
+    res.render('addBlog',{logInMess:req.flash('logIn')});
 }
 const myBlog = (req,res) => {
     console.log("my blog");
     console.log("res.user my blog", req.user);
-    
+    req.flash('logIn', req.user.name)
     blog.find({user_id:req.user._id})
     .then(blogData => {
         console.log("blogData form my blog", blogData);
-        res.render('myBlog',{ data: req.user, blogData: blogData });
+        res.render('myBlog',{ data: req.user, blogData: blogData ,logInMess: req.flash('logIn') });
     })
     .catch(err => console.log(err));
 }
@@ -27,9 +28,10 @@ const allBlog = async (req, res) => {
             
         const blogData = await blog.find({})
         console.log("commnetData", commnetData);
-    
+
+        req.flash('logIn', req.user.name)
         console.log("blogData", blogData);
-        res.render('allBlog', { data: req.user, blogData: blogData , comment: commnetData });
+        res.render('allBlog', { data: req.user, blogData: blogData , comment: commnetData ,logInMess: req.flash('logIn')  });
 }
 
 
@@ -124,4 +126,11 @@ const addComment = async(req,res) => {
 
     res.redirect('/allBlog');
 }
-module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog ,myBlog ,addComment};
+const deletComment = async(req,res) => {
+    console.log("delete comment");
+    const commentId = req.params.id;
+    const deletedComment = await comment.findByIdAndDelete(commentId);
+    console.log("deletedComment", deletedComment);
+    res.redirect('/allBlog');
+}
+module.exports = { addBlog, addBlogController, allBlog, editBlog, deletBlog ,updateBlog ,myBlog ,addComment,deletComment};

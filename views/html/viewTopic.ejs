@@ -339,9 +339,9 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h4 class="card-title">Topic: <%= topicData.topic %></h4>
-                                    <span class="mb-2 d-inline-block">Created By <%= topicData.creater_name %></span>
+                                    <span class="mb-2 d-inline-block me-4">Created By <%= topicData.creater_name %></span>
                                     <a href="/deleteTopicAndSubTopics/<%= topicData._id %>" class=" text-danger p-2">
-                                      <i class="ri-delete-bin-line"></i>
+                                      delete
                                     </a>
                                     <% if (topicData.subtopics && topicData.subtopics.length > 0) { %>
                                         <ul class="list-group mt-3">

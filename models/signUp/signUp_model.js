@@ -13,6 +13,18 @@ const signUpSchema = mongoose.Schema({
     password : {
         type:String,
         required:true
+    },
+    phone: {
+        type: String,
+    },
+    bio: {
+        type: String,
+    },
+    profileImage: {
+        type: String,
+    },
+    userToken : {
+        type: String
     }
 })
 

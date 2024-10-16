@@ -45,6 +45,10 @@
     <!-- Page -->
     <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
 
+    <style>
+      .profile-pic { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #9055fd; }
+    </style>
+
     <!-- Helpers -->
     <script src="../assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -131,10 +135,22 @@
             <!-- /Logo -->
 
             <div class="card-body mt-1 text-center">
-                
+              <div class="profile_img mb-3">
+                <% if(data.profileImage){ %>
+                  <img src="<%= data.profileImage %>" alt="Profile Picture" class="profile-pic" />
+                <% }else{ %>
+                    <img src="../assets/img/avatars/1.png" alt="Profile Picture" class="profile-pic" />
+                <% } %>
+              </div>
                <h5> Username : <%= data.name %></h5>
                <h5> Email : <%= data.email %></h5>
-
+               <% if(data.phone){ %>
+                <h5> Number : <%= data.phone %></h5>
+               <% }%>
+               <% if(data.bio){ %>
+                <h5> bio : <%= data.bio %></h5>
+               <% }%>
+               <a href="/editProfile" class="btn btn-outline-dark">Edit Profile Page</a>
                <a href="/" class="btn btn-outline-dark">Back To Home</a>
             </div>
           </div>
